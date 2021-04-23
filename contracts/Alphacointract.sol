@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity >=0.4.22 <0.9.0;
 
 // ----------------------------------------------------------------------------
 // ERC Token Standard #20 Interface
@@ -50,7 +50,7 @@ contract Alphacointract is SafeMath {
      *
      * Initializes contract with initial supply tokens to the creator of the contract
      */
-    constructor() {
+    constructor() public {
         name = "Alphacoin";
         symbol = "ALPH";
         decimals = 18;
