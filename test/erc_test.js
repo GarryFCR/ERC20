@@ -1,4 +1,4 @@
-
+//test
 var Alphacointract = artifacts.require("Alphacointract.sol");
 
 contract( 'Alphacointract', function(accounts){
