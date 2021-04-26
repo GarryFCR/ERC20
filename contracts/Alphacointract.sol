@@ -2,7 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 // ----------------------------------------------------------------------------
-// ERC Token Standard #20 Interface
+// 
 //
 // ----------------------------------------------------------------------------
 
@@ -18,6 +18,11 @@ contract SafeMath {
         require(b <= a); 
         c = a - b;
          } 
+    function safeMul(uint a, uint b) public pure returns (uint c) { 
+        c = a * b; 
+        require(a == 0 || c / a == b); 
+        
+    } 
     
 }
 
