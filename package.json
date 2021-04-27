@@ -1,0 +1,19 @@
+{
+	"name": "ico-erc20",
+	"version": "1.0.0",
+	"description": "Implementation of an ERC20 token in an ICO",
+	"main": "truffle.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts":{
+		"dev": "lite-server"
+	},
+	"author": "GarryFCR",
+	"license": "MIT",
+	"devDependencies": {
+		"lite-server": "^2.6.1"
+	},
+	"repository": "not publishing",
+	"readme": "not publishing"
+}
