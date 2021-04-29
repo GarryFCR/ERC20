@@ -9,8 +9,52 @@
     	<link href="css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
-		<h1>TOKEN ICO SALE</h1>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<div class="container" style="width: 700px">
+			<div class="jumbotron text-center" style="height: 50px">
+				<h1>ALPHA COIN INITIUM</h1>
+			</div>
+			
+			<div id="loader" hidden="True">
+				<p class="text-center">Loading...</p>		
+			</div>
+			<div id="content" class="jumbotron text-center" style="height: 150px">
+				<p>Alpha coin presents a new a trading platform powered by ethereum.</p><br><p>Token price:<span class="token-price"></span></p>
+				<br/>
+				<hr>
+				<form role="form">
+					<div class="form-group">
+						<div class="input-group">
+							<input id="NoOfToken" class="form-control" type="number" name="number" value="1" min="1" pattern="[0-9]"></input>
+							<span class="input-group-btn">
+                  				<button type="submit" class="btn btn-default">Buy Tokens</button>
+               				 </span>							
+						</div>
+						
+					</div>
+					
+				</form>
+				<hr>
+				<div align="left">
+					<p>TOKENS<br/>Sold:<span class="tokens-sold"></span>
+						<br/>Total:<span class="tokens-available"></span></p>
+						<hr>
+						<p id="accountAddress"></p>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+			
+		</div>
+	
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/web3.min.js"></script>
 			<script src="js/truffle-contract.min.js"></script>

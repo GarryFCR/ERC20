@@ -6,7 +6,7 @@
 	"directories": {
 		"test": "test"
 	},
-	"scripts":{
+	"scripts": {
 		"dev": "lite-server"
 	},
 	"author": "GarryFCR",
@@ -15,5 +15,9 @@
 		"lite-server": "^2.6.1"
 	},
 	"repository": "not publishing",
-	"readme": "not publishing"
+	"readme": "not publishing",
+	"dependencies": {
+		"browserify": "^17.0.0",
+		"truffle-contract": "^4.0.31"
+	}
 }
