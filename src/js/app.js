@@ -2,6 +2,11 @@ App = {
   web3Provider: null,
   contracts: {},
   account: '0x0',
+  loading: false,
+  tokenPrice: 0,
+  tokensSold: 0,
+  tokensAvailable: 100000000000000000000000000,
+
 
   init: function() {
     return App.initWeb3();
@@ -38,7 +43,16 @@ App = {
   },
 
   render: function() {
+    if (App.loading) {
+      return;
+    }
+    App.loading = true;
 
+    var loader  = $('#loader');
+    var content = $('#content');
+
+    loader.show();
+    content.hide();
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
       if(err === null) {
@@ -46,6 +60,23 @@ App = {
         $('#accountAddress').html("Your Account: " + account);
       }
     });
+
+    App.contracts.Ico.deployed().then(function(instance){
+      ico=instance;
+      return ico.tokenPrice();
+    }).then(function (tokenPrice) {
+      App.tokenPrice = tokenPrice;
+      $('.token-price').html(web3.utils.fromWei(App.tokenPrice ,'ether'));
+      return ico.tokenSold();
+    }).then(function(tokensSold){
+      App.tokensSold = tokensSold;
+      $('.tokens-sold').html(App.tokensSold);
+      $('.tokens-available').html(BigInt(App.tokensAvailable));
+    })
+
+    App.loading = false;
+    loader.hide();
+    content.show();
 
    }
 
