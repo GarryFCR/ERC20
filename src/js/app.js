@@ -27,16 +27,12 @@ App = {
     $.getJSON("Ico.json", function(sale) {
       App.contracts.Ico = TruffleContract(sale);
       App.contracts.Ico.setProvider(App.web3Provider);
-      App.contracts.Ico.deployed().then(function(sale) {
-        console.log("Dapp Token Sale Address:", sale.address);
-      });
+     
     }).done(function() {
       $.getJSON("Alphacointract.json", function(Token) {
         App.contracts.Alphacointract = TruffleContract(Token);
         App.contracts.Alphacointract.setProvider(App.web3Provider);
-        App.contracts.Alphacointract.deployed().then(function(Token) {
-          console.log("Dapp Token Address:", Token.address);
-        });
+        
         return App.render();
       });
     });
@@ -54,12 +50,12 @@ App = {
     loader.show();
     content.hide();
     // Load account data
-    web3.eth.getCoinbase(function(err, account) {
-      if(err === null) {
-        App.account = account;
-        $('#accountAddress').html("Your Account: " + account);
-      }
+    if(window.ethereum){
+    ethereum.enable().then(function(acc){
+        App.account = acc[0];
+        $("#accountAddress").html("Your Account: " + App.account);
     });
+    }
 
     App.contracts.Ico.deployed().then(function(instance){
       ico=instance;
@@ -69,16 +65,42 @@ App = {
       $('.token-price').html(web3.utils.fromWei(App.tokenPrice ,'ether'));
       return ico.tokenSold();
     }).then(function(tokensSold){
+      console.log(Number(tokensSold));
       App.tokensSold = tokensSold;
-      $('.tokens-sold').html(App.tokensSold);
+      $('.tokens-sold').html(Number(App.tokensSold));
       $('.tokens-available').html(BigInt(App.tokensAvailable));
-    })
+    });
 
-    App.loading = false;
-    loader.hide();
-    content.show();
+    App.contracts.Alphacointract.deployed().then(function(instance){
+      Instance = instance;
+      return Instance.balanceOf(App.account);
+    }).then(function(balance){
+      $('.balance').html(Number(balance));
 
-   }
+      App.loading = false;
+      loader.hide();
+      content.show();      
+    });
+   },
+
+   buyTokens: function () {
+     $('#content').hide();
+     $('#loader').show();
+     var NoOfTokens = $('#NoOfToken').val();
+
+     App.contracts.Ico.deployed().then(function(instance){
+      return instance.Purchase(NoOfTokens,{
+        from: App.account,
+        value: NoOfTokens*App.tokenPrice,
+        gas: 500000
+      });
+     }).then(function (result) {
+      console.log("Tokens purchased")
+      $('form').trigger('reset')
+      $('#loader').hide();
+      $('#content').show();
+     });
+   } 
 
 
 }

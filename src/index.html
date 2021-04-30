@@ -17,11 +17,12 @@
 			<div id="loader" >
 				<p class="text-center">Loading...</p>		
 			</div>
-			<div id="content" class="jumbotron text-center" style="height: 150px" style="display: none;">
+			<div id="content" class="jumbotron text-center" style="display: none;">
 				<p>Alpha coin presents a new a trading platform powered by ethereum.</p><br><p>Token price:<span class="token-price"></span></p>
+				<br><p>Balance:<span class="balance"></span>&nbspALPH</p>
 				<br/>
 				<hr>
-				<form role="form">
+				<form onSubmit="App.buyTokens(); return false;" role="form">
 					<div class="form-group">
 						<div class="input-group">
 							<input id="NoOfToken" class="form-control" type="number" name="number" value="1" min="1" pattern="[0-9]"></input>
