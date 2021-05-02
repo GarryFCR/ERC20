@@ -18,7 +18,7 @@ App = {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
 
       web3 = new Web3(App.web3Provider);
-    
+      web3.setProvider(new Web3.providers.WebsocketProvider('ws://localhost:7545'));
     return App.initContracts();
   },
 
@@ -32,27 +32,10 @@ App = {
       $.getJSON("Alphacointract.json", function(Token) {
         App.contracts.Alphacointract = TruffleContract(Token);
         App.contracts.Alphacointract.setProvider(App.web3Provider);
-        App.listenevents();
         return App.render();
       });
     });
   },
-
-
-  
-
-
-  listenevents: function(){
-    App.contracts.Ico.deployed().then(function(instance){
-      ico =instance;
-      ico.contract.events.Sell({fromBlock: 0,toBlock: 'latest'},function(error,event){
-        console.log("event triggered", event);
-        App.render();
-      }).on('data', event=> console.log(event));
-
-    });
-  },
-
 
 
 
@@ -83,7 +66,6 @@ App = {
       $('.token-price').html(web3.utils.fromWei(App.tokenPrice ,'ether'));
       return ico.tokenSold();
     }).then(function(tokensSold){
-      console.log(Number(tokensSold));
       App.tokensSold = tokensSold;
       $('.tokens-sold').html(Number(App.tokensSold));
       $('.tokens-available').html(BigInt(App.tokensAvailable));
@@ -113,7 +95,11 @@ App = {
         gas: 500000
       });
      }).then(function (result) {
-      console.log("Tokens purchased")
+      console.log("Tokens purchased");
+      if(result.logs[0].event== 'Sell'){
+        console.log("event triggered:", result.logs[0].event);
+        App.render();
+      }
       $('form').trigger('reset')
       
      });
