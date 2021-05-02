@@ -32,22 +32,24 @@ App = {
       $.getJSON("Alphacointract.json", function(Token) {
         App.contracts.Alphacointract = TruffleContract(Token);
         App.contracts.Alphacointract.setProvider(App.web3Provider);
-        App.events();
+        App.listenevents();
         return App.render();
       });
     });
   },
 
 
-  events: function(){
+  
+
+
+  listenevents: function(){
     App.contracts.Ico.deployed().then(function(instance){
-      instance.Sell({},{
-        fromBlock: 0,
-        toBlock: 'latest',
-      }).watch(function(error,event){
+      ico =instance;
+      ico.contract.events.Sell({fromBlock: 0,toBlock: 'latest'},function(error,event){
         console.log("event triggered", event);
         App.render();
-      });
+      }).on('data', event=> console.log(event));
+
     });
   },
 
