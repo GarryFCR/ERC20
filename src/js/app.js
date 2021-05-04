@@ -5,7 +5,7 @@ App = {
   loading: false,
   tokenPrice: 0,
   tokensSold: 0,
-  tokensAvailable: 100000000000000000000000000,
+  
 
 
   init: function() {
@@ -68,14 +68,14 @@ App = {
     }).then(function(tokensSold){
       App.tokensSold = tokensSold;
       $('.tokens-sold').html(Number(App.tokensSold));
-      $('.tokens-available').html(BigInt(App.tokensAvailable));
+      $('.tokens-available').html('100000000000000000000000000');
     });
 
     App.contracts.Alphacointract.deployed().then(function(instance){
       Instance = instance;
       return Instance.balanceOf(App.account);
     }).then(function(balance){
-      $('.balance').html(Number(balance));
+      $('.balance').html(String(balance));
 
       App.loading = false;
       loader.hide();
@@ -100,6 +100,7 @@ App = {
         console.log("event triggered:", result.logs[0].event);
         App.render();
       }
+      
       $('form').trigger('reset')
       
      });
